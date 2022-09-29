@@ -77,7 +77,7 @@
                                 <a-icon type="question-circle" theme="filled"></a-icon>
                             </a-tooltip>
                             <a-tag color="green" @click="openSelectV2rayVersion">[[ status.xray.version ]]</a-tag>
-                            < a-tag  color =" blue " @ click =" openSelectV2rayVersion " > Switch Version </ a-tag >
+                            <a-tag color="blue" @click="openSelectV2rayVersion">Switch Version</a-tag>
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
@@ -164,11 +164,11 @@
             </transition>
         </a-layout-content>
     </a-layout>
-    < a-modal  id =" version-modal " v-model =" versionModal.visible " title =" Switch version "
+    <a-modal id="version-modal" v-model="versionModal.visible" title="Switch version"
              :closable="true" @ok="() => versionModal.visible = false"
-             ok-text = " OK " cancel-text = " Cancel " >
-        < h2 > Click the version you want to switch </ h2 >
-        < h2 > Please choose carefully, the old version may be incompatible with the configuration </ h2 >
+             ok-text="OK" cancel-text="Cancel">
+        <h2>Click the version you want to switch</h2>
+        <h2>Please choose carefully, the old version may be incompatible with the configuration</h2>
         <template v-for="version, index in versionModal.versions">
             <a-tag :color="index % 2 == 0 ? 'blue' : 'green'"
                    style="margin: 10px" @click="switchV2rayVersion(version)">
@@ -213,7 +213,7 @@
         }
     }
 
-    class  Status  {
+    class Status {
         constructor(data) {
             this.cpu = new CurTotal(0, 0);
             this.disk = new CurTotal(0, 0);
@@ -235,7 +235,7 @@
             this.loads = data.loads.map(load => toFixed(load, 2));
             this.mem = new CurTotal(data.mem.current, data.mem.total);
             this.netIO = data.netIO;
-            this . netTraffic  =  data . netTraffic ;
+            this.netTraffic = data.netTraffic;
             this.swap = new CurTotal(data.swap.current, data.swap.total);
             this.tcpCount = data.tcpCount;
             this.udpCount = data.udpCount;
@@ -271,26 +271,26 @@
 
     const app = new Vue({
         delimiters: ['[[', ']]'],
-        the : '#app' ,
+        the:'#app',
         data: {
             siderDrawer,
             status: new Status(),
             versionModal,
             spinning: false,
-            loadingTip : 'Loading' ,
+            loadingTip:'Loading',
         },
         methods: {
-            loading ( spinning ,  tip  =  'loading' )  {
+            loading(spinning, tip = 'loading') {
                 this.spinning = spinning;
                 this.loadingTip = tip;
             },
             async getStatus() {
                 const msg = await HttpUtil.post('/server/status');
                 if (msg.success) {
-                    this . setStatus ( msg . obj ) ;
+                    this.setStatus(msg.obj);
                 }
             },
-            setStatus ( data )  {
+            setStatus(data) {
                 this.status = new Status(data);
             },
             async openSelectV2rayVersion() {
@@ -304,13 +304,13 @@
             },
             switchV2rayVersion(version) {
                 this.$confirm({
-                    title : 'Switch xray version' ,
-                    content : 'Should you switch the xray version to'  +  ` ${ version } ?` ,
-                    okText : 'OK' ,
-                    cancelText : 'Cancel' ,
+                    title:'Switch xray version',
+                    content:'Should you switch the xray version to' + ` ${ version } ?`,
+                    okText:'OK',
+                    cancelText:'Cancel',
                     onOk: async () => {
                         versionModal.hide();
-                        this .loading ( true , ' installing , please do not refresh this page' ) ; 
+                        this.loading (true, 'installing , please do not refresh this page'); 
                         await HttpUtil.post(`/server/installXray/${version}`);
                         this.loading(false);
                     },

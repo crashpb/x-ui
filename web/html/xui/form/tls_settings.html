@@ -13,10 +13,10 @@
 <!-- tls settings -->
 <a-form v-if="inbound.tls || inbound.xtls"
         layout="inline">
-    < a-form-item  label =" domain name " >
+    <a-form-item label="domain name">
         <a-input v-model.trim="inbound.stream.tls.server"></a-input>
     </a-form-item>
-    < a-form-item  label =" certificate " >
+    <a-form-item label="certificate">
         <a-radio-group v-model="inbound.stream.tls.certs[0].useFile"
                        button-style="solid">
             <a-radio-button :value="true">certificate file path</a-radio-button>
@@ -24,19 +24,19 @@
         </a-radio-group>
     </a-form-item>
     <template v-if="inbound.stream.tls.certs[0].useFile">
-        < a-form-item  label =" path to public key file " >
+        <a-form-item label="path to public key file">
             <a-input v-model.trim="inbound.stream.tls.certs[0].certFile"></a-input>
         </a-form-item>
-        < a-form-item  label =" path to key file " >
+        <a-form-item label="path to key file">
             <a-input v-model.trim="inbound.stream.tls.certs[0].keyFile"></a-input>
         </a-form-item>
     </template>
     <template v-else>
-        < a-form-item  label =" Public key content " >
+        <a-form-item label="Public key content">
             <a-input type="textarea" :rows="2"
                      v-model="inbound.stream.tls.certs[0].cert"></a-input>
         </a-form-item>
-        < a-form-item  label =" Key content " >
+        <a-form-item label="Key content">
             <a-input type="textarea" :rows="2"
                      v-model="inbound.stream.tls.certs[0].key"></a-input>
         </a-form-item>

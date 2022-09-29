@@ -36,28 +36,28 @@
                         <a-button type="danger" :disabled="!saveBtnDisable" @click="restartPanel">restart panel</a-button>
                     </a-space>
                     <a-tabs default-active-key="1">
-                        < a-tab-pane  key =" 1 " tab =" Panel Configuration " >
+                        <a-tab-pane key="1" tab="Panel Configuration">
                             <a-list item-layout="horizontal" style="background: white">
-                                < setting-list-item  type = " text " title = " Panel listening IP " desc = " Default to leave blank to listen to all IPs, restart the panel to take effect " v-model = " allSetting.webListen " > </ setting-list-item >
-                                < setting-list-item  type = " number " title = " Panel listening port " desc = " Restart the panel to take effect " v-model.number = " allSetting.webPort " > </ setting-list-item >
-                                < setting-list-item  type = " text " title = " Panel certificate public key file path " desc = " Fill in an absolute path starting with '/', restart the panel to take effect " v-model = " allSetting.webCertFile " > </ setting-list-item >
-                                < setting-list-item  type = " text " title = " Panel certificate key file path " desc = " Fill in an absolute path starting with '/', restart the panel to take effect " v-model = " allSetting.webKeyFile " > </ setting-list-item >
-                                < setting-list-item  type = " text " title = " Panel url root path " desc = " must start with '/' and end with '/', restart the panel to take effect " v-model = " allSetting.webBasePath " > < / setting-list-item >
+                                <setting-list-item type="text" title="Panel listening IP" desc="Default to leave blank to listen to all IPs, restart the panel to take effect" v-model="allSetting.webListen"> </setting-list-item >
+                                <setting-list-item type="number" title="Panel listening port" desc="Restart the panel to take effect" v-model.number="allSetting.webPort"> </setting-list-item>
+                                <setting-list-item type="text" title="Panel certificate public key file path" desc="Fill in an absolute path starting with '/', restart the panel to take effect" v-model="allSetting.webCertFile"> </setting-list-item>
+                                <setting-list-item type="text" title="Panel certificate key file path" desc="Fill in an absolute path starting with '/', restart the panel to take effect" v-model="allSetting.webKeyFile"> </setting-list-item>
+                                <setting-list-item type="text" title="Panel url root path" desc="must start with '/' and end with '/', restart the panel to take effect" v-model="allSetting.webBasePath"> </setting-list-item>
                             </a-list>
                         </a-tab-pane>
-                        < a-tab-pane  key =" 2 " tab =" User Settings " >
+                        <a-tab-pane key="2" tab="User Settings">
                             <a-form style="background: white; padding: 20px">
-                                < a-form-item  label = " Original Username " >
+                                <a-form-item label="Original Username">
                                     <a-input v-model="user.oldUsername" style="max-width: 300px"></a-input>
                                 </a-form-item>
-                                < a-form-item  label = " Original password " >
+                                <a-form-item label="Original password">
                                     <a-input type="password" v-model="user.oldPassword"
                                              style="max-width: 300px"></a-input>
                                 </a-form-item>
-                                < a-form-item  label =" new username " >
+                                <a-form-item label="new username">
                                     <a-input v-model="user.newUsername" style="max-width: 300px"></a-input>
                                 </a-form-item>
-                                < a-form-item  label =" new password " >
+                                <a-form-item label="new password">
                                     <a-input type="password" v-model="user.newPassword"
                                              style="max-width: 300px"></a-input>
                                 </a-form-item>
@@ -66,14 +66,14 @@
                                 </a-form-item>
                             </a-form>
                         </a-tab-pane>
-                        < a-tab-pane  key = " 3 " tab = " xray related settings " >
+                        <a-tab-pane key="3" tab="xray related settings">
                             <a-list item-layout="horizontal" style="background: white">
-                                < setting-list-item  type = " textarea " title = " xray configuration template " desc = " Generate the final xray configuration file based on this template, restart the panel to take effect " v-model = " allSetting.xrayTemplateConfig " > </ setting -list-item >
+                                <setting-list-item type="textarea" title="xray configuration template" desc="Generate the final xray configuration file based on this template, restart the panel to take effect" v-model="allSetting.xrayTemplateConfig"> </setting-list-item>
                             </a-list>
                         </a-tab-pane>
-                        < a-tab-pane  key =" 4 " tab =" Other Settings " >
+                        <a-tab-pane key="4" tab="Other Settings">
                             <a-list item-layout="horizontal" style="background: white">
-                                < setting-list-item  type = " text " title = " time zone " desc = " Scheduled tasks run according to the time in this time zone, and restart the panel to take effect " v-model = " allSetting.timeLocation " > </ setting-list-item >
+                                <setting-list-item type="text" title = " time zone " desc = " Scheduled tasks run according to the time in this time zone, and restart the panel to take effect " v-model = " allSetting.timeLocation " > </ setting-list-item >
                             </a-list>
                         </a-tab-pane>
                     </a-tabs>

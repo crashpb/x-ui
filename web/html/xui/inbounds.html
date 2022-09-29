@@ -58,13 +58,13 @@
                                     <a @click="e => e.preventDefault()">operate</a>
                                     <a-menu slot="overlay" @click="a => clickAction(a, dbInbound)">
                                         <a-menu-item v-if="dbInbound.hasLink()" key="qrcode">
-                                            < a-icon  type = " qrcode " > </ a-icon > QR code
+                                            <a-icon type="qrcode"></a-icon>QRcode
                                         </a-menu-item>
                                         <a-menu-item key="edit">
                                             <a-icon type="edit"></a-icon>edit
                                         </a-menu-item>
                                         <a-menu-item key="resetTraffic">
-                                            < a-icon  type = " retweet " > </ a-icon > reset traffic
+                                            <a-icon type="retweet"></a-icon>resettraffic
                                         </a-menu-item>
                                         <a-menu-item key="delete">
                                             <span style="color: #FF4D4F">
@@ -83,7 +83,7 @@
                                     <a-tag v-if="dbInbound.up + dbInbound.down < dbInbound.total" color="cyan">[[ sizeFormat(dbInbound.total) ]]</a-tag>
                                     <a-tag v-else color="red">[[ sizeFormat(dbInbound.total) ]]</a-tag>
                                 </template>
-                                < a-tag  v-else  color =" green " > unlimited </ a-tag >
+                                <a-tag v-else color="green">unlimited</a-tag>
                             </template>
                             <template slot="settings" slot-scope="text, dbInbound">
                                 <a-button type="link" @click="showInfo(dbInbound)">Check</a-button>
@@ -108,7 +108,7 @@
                                         [[ DateUtil.formatMillis(dbInbound.expiryTime) ]]
                                     </a-tag>
                                 </template>
-                                < a-tag  v-else  color =" green " > indefinitely </ a-tag >
+                                <a-tag v-else color="green">indefinitely</a-tag>
                             </template>
                         </a-table>
                     </a-card>
@@ -121,12 +121,12 @@
 <script>
 
     const columns = [{
-        title : "Operation" ,
+        title:"Operation",
         align: 'center',
         width: 30,
         scopedSlots: { customRender: 'action' },
     }, {
-        title : "Enable" ,
+        title:"Enable",
         align: 'center',
         width: 40,
         scopedSlots: { customRender: 'enable' },
@@ -136,37 +136,37 @@
         dataIndex: "id",
         width: 30,
     }, {
-        title : "Notes" ,
+        title:"Notes",
         align: 'center',
         width: 100,
         dataIndex: "remark",
     }, {
-        title : "Agreement" ,
+        title:"Agreement",
         align: 'center',
         width: 60,
         scopedSlots: { customRender: 'protocol' },
     }, {
-        title : "Port" ,
+        title:"Port",
         align: 'center',
         dataIndex: "port",
         width: 60,
     }, {
-        title : "Flow↑|↓" ,
+        title:"Flow↑|↓",
         align: 'center',
         width: 150,
         scopedSlots: { customRender: 'traffic' },
     }, {
-        title : "Details" ,
+        title:"Details",
         align: 'center',
         width: 40,
         scopedSlots: { customRender: 'settings' },
     }, {
-        title : "Transport Configuration" ,
+        title:"Transport Configuration",
         align: 'center',
         width: 60,
         scopedSlots: { customRender: 'stream' },
     }, {
-        title : "Expiration Time" ,
+        title:"Expiration Time",
         align: 'center',
         width: 80,
         scopedSlots: { customRender: 'expiryTime' },
@@ -174,7 +174,7 @@
 
     const app = new Vue({
         delimiters: ['[[', ']]'],
-        the : '#app' ,
+        the:'#app',
         data: {
             siderDrawer,
             spinning: false,
@@ -234,8 +234,8 @@
             },
             openAddInbound() {
                 inModal.show({
-                    title : 'Add inbound' ,
-                    okText : 'Add' ,
+                    title:'Add inbound',
+                    okText:'Add',
                     confirm: async (inbound, dbInbound) => {
                         inModal.loading();
                         await this.addInbound(inbound, dbInbound);
@@ -246,8 +246,8 @@
             openEditInbound(dbInbound) {
                 const inbound = dbInbound.toInbound();
                 inModal.show({
-                    title : 'Modify inbound' ,
-                    okText : 'Modify' ,
+                    title:'Modify inbound',
+                    okText:'Modify',
                     inbound: inbound,
                     dbInbound: dbInbound,
                     confirm: async (inbound, dbInbound) => {
@@ -295,10 +295,10 @@
             },
             resetTraffic(dbInbound) {
                 this.$confirm({
-                    title : 'Reset traffic' ,
-                    content : 'Are you sure you want to reset traffic?' ,
-                    okText : 'reset' ,
-                    cancelText : 'Cancel' ,
+                    title:'Reset traffic',
+                    content:'Are you sure you want to reset traffic?',
+                    okText:'reset',
+                    cancelText:'Cancel',
                     onOk : ( )  =>  {
                         const inbound = dbInbound.toInbound();
                         dbInbound.up = 0;
@@ -309,16 +309,16 @@
             },
             delInbound(dbInbound) {
                 this.$confirm({
-                    title : 'Delete inbound' ,
-                    content : 'Are you sure you want to delete inbound?' ,
-                    okText : 'delete' ,
-                    cancelText : 'Cancel' ,
+                    title:'Delete inbound',
+                    content:'Are you sure you want to delete inbound?',
+                    okText:'delete',
+                    cancelText:'Cancel',
                     onOk: () => this.submit('/xui/inbound/del/' + dbInbound.id),
                 });
             },
             showQrcode(dbInbound) {
                 const link = dbInbound.genLink();
-                qrModal.show ( ' QR code' , link ) ; 
+                qrModal.show('QRcode',link); 
             },
             showInfo(dbInbound) {
                 infoModal.show(dbInbound);

@@ -8,7 +8,7 @@ plain='\033[0m'
 cur_dir=$(pwd)
 
 # check root
-[[ $EUID  -ne 0 ]] &&  echo -e " ${red} Error: ${plain} must be root to run this script!\n "  &&  exit 1
+[[ $EUID -ne 0 ]] && echo -e "${red} Error: ${plain} must be root to run this script!\n"  &&  exit 1
 
 # check os
 if [[ -f /etc/redhat-release ]]; then
@@ -21,12 +21,12 @@ elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
     release="centos"
 elif cat /proc/version | grep -Eqi "debian"; then
     release="debian"
-elif cat /proc/version | grep -Eqi " ubuntu " ;  then
+elif cat /proc/version | grep -Eqi "ubuntu";  then
     release="ubuntu"
-elif cat /proc/version | grep -Eqi " centos|red hat|redhat " ;  then
+elif cat /proc/version | grep -Eqi "centos|red hat|redhat";  then
     release="centos"
 else
-    echo -e " ${red} no system version detected, please contact the script author! ${plain} \n "  &&  exit 1
+    echo -e "${red} no system version detected, please contact the script author! ${plain} \n" &&  exit 1
 fi
 
 arch=$(arch)
@@ -37,13 +37,13 @@ elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
     arch="arm64"
 else
     arch="amd64"
-    echo -e " ${red} failed to detect architecture, use default architecture: ${arch}${plain} "
+    echo -e "${red} failed to detect architecture, use default architecture: ${arch}${plain}"
 fi
 
-echo  " Architecture: ${arch} "
+echo  "Architecture: ${arch}"
 
 if [ $(getconf WORD_BIT) != '32' ] && [ $(getconf LONG_BIT) != '64' ]; then
-    echo  " This software does not support 32-bit system (x86), please use 64-bit system (x86_64), if the detection is wrong, please contact the author "
+    echo  "This software does not support 32-bit system (x86), please use 64-bit system (x86_64), if the detection is wrong, please contact the author"
     exit -1
 fi
 
@@ -59,15 +59,15 @@ fi
 
 if [[ x"${release}" == x"centos" ]]; then
     if [[ ${os_version} -le 6 ]]; then
-        echo -e " ${red} Please use CentOS 7 or later! ${plain} \n "  &&  exit 1
+        echo -e "${red} Please use CentOS 7 or later! ${plain} \n"  &&  exit 1
     fi
 elif [[ x"${release}" == x"ubuntu" ]]; then
     if [[ ${os_version} -lt 16 ]]; then
-        echo -e " ${red} Please use Ubuntu 16 or later! ${plain} \n "  &&  exit 1
+        echo -e "${red} Please use Ubuntu 16 or later! ${plain} \n"  &&  exit 1
     fi
 elif [[ x"${release}" == x"debian" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
-        echo -e " ${red} Please use Debian 8 or later! ${plain} \n "  &&  exit 1
+        echo -e "${red} Please use Debian 8 or later! ${plain} \n"  &&  exit 1
     fi
 fi
 
@@ -81,24 +81,24 @@ install_base() {
 
 #This function will be called when user installed x-ui out of sercurity
 config_after_install() {
-    echo -e " ${yellow} For security reasons, it is necessary to forcibly modify the port and account password after installation/update ${plain} "
-    read -p " Confirm whether to continue, if you select n, skip this port and account password setting [y/n] " : config_confirm
+    echo -e "${yellow} For security reasons, it is necessary to forcibly modify the port and account password after installation/update ${plain}"
+    read -p "Confirm whether to continue, if you select n, skip this port and account password setting [y/n]": config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
-        read -p " Please set your account name: " config_account
-        echo -e " ${yellow} your account name will be set to: ${config_account}${plain} "
-        read -p " Please set your account password: " config_password
-        echo -e " ${yellow} Your account password will be set to: ${config_password}${plain} "
-        read -p " Please set the panel access port: " config_port
-        echo -e " ${yellow} Your panel access port will be set to: ${config_port}${plain} "
-        echo -e " ${yellow} confirm setting, setting ${plain} "
+        read -p "Please set your account name:" config_account
+        echo -e "${yellow} your account name will be set to:${config_account}${plain}"
+        read -p "Please set your account password:" config_password
+        echo -e "${yellow} Your account password will be set to:${config_password}${plain}"
+        read -p "Please set the panel access port:" config_port
+        echo -e "${yellow} Your panel access port will be set to:${config_port}${plain}"
+        echo -e "${yellow} confirm setting, setting${plain}"
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
-        echo -e " ${yellow} account password setting completed ${plain} "
+        echo -e "${yellow} account password setting completed${plain}"
         /usr/local/x-ui/x-ui setting -port ${config_port}
-        echo -e " ${yellow} Panel port setting completed ${plain} "
+        echo -e "${yellow} Panel port setting completed${plain}"
     else
-        echo -e " ${red} unset... ${plain} "
-        echo -e " If ${red} is a new installation, the default web port is ${green} 54321 ${plain} , the username and password are both ${green} admin ${plain} , please modify it in time "
-        echo -e " If ${red} is a version upgrade, the previous settings will be retained, and the login method will remain unchanged. You can enter x-ui and then type the number 7 to view the login information ${plain} "
+        echo -e "${red} unset...${plain}"
+        echo -e "If${red}is a new installation, the default web port is ${green} 54321 ${plain} , the username and password are both ${green} admin ${plain} , please modify it in time"
+        echo -e "If${red}is a version upgrade, the previous settings will be retained, and the login method will remain unchanged. You can enter x-ui and then type the number 7 to view the login information${plain}"
     fi
 }
 
@@ -109,7 +109,7 @@ install_x-ui() {
     if [ $# == 0 ]; then
         last_version=$(curl -Ls "https://api.github.com/repos/FranzKafkaYu/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
-            echo -e " ${red} failed to detect the x-ui version, it may exceed the Github API limit, please try again later, or manually specify the x-ui version to install ${plain} "
+            echo -e "${red} failed to detect the x-ui version, it may exceed the Github API limit, please try again later, or manually specify the x-ui version to install${plain}"
             exit 1
         fi
         echo -e " Detected the latest version of x-ui: ${last_version} , start installation "
@@ -121,10 +121,10 @@ install_x-ui() {
     else
         last_version=$1
         url="https://github.com/FranzKafkaYu/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz"
-        echo -e " Start installing x-ui v $1 "
+        echo -e "Start installing x-ui v$1"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz ${url}
         if [[ $? -ne 0 ]]; then
-            echo -e " ${red} failed to download x-ui v $1 , please make sure this version exists ${plain} "
+            echo -e "${red}failed to download x-ui v$1 , please make sure this version exists${plain}"
             exit 1
         fi
     fi
@@ -142,34 +142,34 @@ install_x-ui() {
     chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
     config_after_install
-    # echo -e "If it is a fresh installation, the default web port is ${green}54321${plain}, and the default username and password are ${green}admin${plain}"
-    # echo -e "Please make sure this port is not occupied by other programs, ${yellow} and make sure port 54321 has been released ${plain}"
-    #     echo -e "If you want to modify 54321 to another port, enter the x-ui command to modify it, and also make sure that the port you modify is also allowed"
+    #echo -e "If it is a fresh installation, the default web port is ${green}54321${plain}, and the default username and password are ${green}admin${plain}"
+    #echo -e "Please make sure this port is not occupied by other programs, ${yellow} and make sure port 54321 has been released ${plain}"
+    #    echo -e "If you want to modify 54321 to another port, enter the x-ui command to modify it, and also make sure that the port you modify is also allowed"
     #echo -e ""
-    # echo -e "If updating the panel, access the panel as you did before"
+    #echo -e "If updating the panel, access the panel as you did before"
     #echo -e ""
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
-    echo -e " ${green} x-ui v ${last_version}${plain} installation completed, panel started, "
+    echo -e "${green} x-ui v${last_version}${plain} installation completed, panel started,"
     echo -e ""
-    echo -e " How to use x-ui management script: "
+    echo -e "How to use x-ui management script:"
     echo -e "----------------------------------------------"
-    echo -e " x-ui - show admin menu (more functions) "
-    echo -e " x-ui start - start the x-ui panel "
-    echo -e " x-ui stop - stop the x-ui panel "
-    echo -e " x-ui restart - restart the x-ui panel "
-    echo -e " x-ui status - view x-ui status "
-    echo -e " x-ui enable - set x-ui to boot automatically "
-    echo -e " x-ui disable - cancel x-ui auto-start "
-    echo -e " x-ui log - view x-ui log "
-    echo -e " x-ui v2-ui - Migrate the v2-ui account data of this machine to x-ui "
-    echo -e " x-ui update - update x-ui panel "
-    echo -e " x-ui install - install x-ui panel "
-    echo -e " x-ui uninstall - uninstall x-ui panel "
+    echo -e "x-ui - show admin menu (more functions)"
+    echo -e "x-ui start - start the x-ui panel"
+    echo -e " x-ui stop - stop the x-ui panel"
+    echo -e "x-ui restart - restart the x-ui panel"
+    echo -e "x-ui status - view x-ui status"
+    echo -e "x-ui enable - set x-ui to boot automatically"
+    echo -e "x-ui disable - cancel x-ui auto-start"
+    echo -e "x-ui log - view x-ui log"
+    echo -e "x-ui v2-ui - Migrate the v2-ui account data of this machine to x-ui"
+    echo -e "x-ui update - update x-ui panel"
+    echo -e "x-ui install - install x-ui panel"
+    echo -e "x-ui uninstall - uninstall x-ui panel"
     echo -e "----------------------------------------------"
 }
 
-echo -e " ${green} starts installing ${plain} "
+echo -e "${green}starts installing${plain}"
 install_base
 install_x-ui $1
